@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Aplicatia <a [href]="app.hosting" target="_blank"> {{app.name}}</a></h2>
+<mat-dialog-content>
+  <p>Autor/administrator: <a [href]="'mailto:'+app.author.email">{{app.author.name}}</a></p>
+  <p>Tel: {{app.author.tel}}, {{app.author.description}}</p>
+  <p>Versiune:{{app.version}}</p>
+  <p>Lansata la: {{app.released}}</p>
+  <p>Codul sursa: <a [href]="app.codeLocation"  target="_blank">{{app.codeLocation}}</a></p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button cdkFocusInitial (click)="onInchideClick()">Inchide</button>
+</mat-dialog-actions>

@@ -1,0 +1,51 @@
+<p mat-dialog-title>Profil</p>
+<mat-dialog-content>
+    <mat-tab-group>
+      <mat-tab label="Utilizator">
+    <div class="row">
+      <mat-form-field class="col-12 col-md-6 pe-2 readonly">
+        <mat-label>Display name</mat-label>
+        <mat-icon matPrefix>email</mat-icon>
+        <input matInput readonly [value]="user.displayName">
+      </mat-form-field>
+      <mat-form-field class="col-12 col-md-6 readonly">
+        <mat-label>Email</mat-label>
+        <mat-icon matPrefix>email</mat-icon>
+        <input matInput readonly [value]="user.email">
+      </mat-form-field>
+    </div>
+    <mat-form-field class="col-12 readonly">
+      <mat-label>User uid</mat-label>
+      <mat-icon matPrefix>email</mat-icon>
+      <input matInput readonly  [value]="user.uid">
+    </mat-form-field>
+    <mat-form-field class="col-12 readonly">
+      <mat-label>Email verified</mat-label>
+      <mat-icon *ngIf="user.emailVerified" matPrefix>check</mat-icon>
+      <mat-icon *ngIf="!user.emailVerified" matPrefix>close</mat-icon>
+      <input matInput readonly [value]="user.emailVerified">
+    </mat-form-field>
+    <div class="row">
+    <mat-form-field class="col-6 pe-2 readonly">
+      <mat-label>Is Admin</mat-label>
+      <mat-icon *ngIf="utilizatori.userIsAdmin(user)" matPrefix>check</mat-icon>
+      <mat-icon *ngIf="!utilizatori.userIsAdmin(user)" matPrefix>close</mat-icon>
+      <input matInput readonly [value]="utilizatori.userIsAdmin(user)">
+    </mat-form-field>
+    <mat-form-field class="col-6 readonly">
+      <mat-label>Is Furnizor</mat-label>
+      <mat-icon *ngIf="utilizatori.userIsFurnizor(user)" matPrefix>check</mat-icon>
+      <mat-icon *ngIf="!utilizatori.userIsFurnizor(user)" matPrefix>close</mat-icon>
+      <input matInput readonly [value]="utilizatori.userIsFurnizor(user)">
+    </mat-form-field>
+  </div>
+  </mat-tab>
+  <mat-tab *ngIf="currentFurnizor" label="Furnizor">
+    <app-furnizor [parametru]="currentFurnizor" [readOnly]="true"></app-furnizor>
+  </mat-tab>
+</mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions class="col-12" align="end">
+  <button mat-button cdkFocusInitial mat-dialog-close mat-raised-button>Inchide</button>
+</mat-dialog-actions>
+

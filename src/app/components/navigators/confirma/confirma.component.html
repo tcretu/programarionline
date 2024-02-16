@@ -1,0 +1,11 @@
+<h1>{{message}}</h1>
+@if((url_anulare!='') && (programare) && (programare.slot.anulare_minute > 0)){
+  <h2>Puteti anula programarea cu max. {{programare.slot.anulare_minute}} minute inainte de data programata dand click <a [href]="url_anulare">aici!</a></h2>
+}
+<p >
+  <span>
+    <button mat-button color="primary" type="button" routerLink="">
+      Prima pagina
+    </button>
+  </span>
+</p>

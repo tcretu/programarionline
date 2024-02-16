@@ -1,0 +1,182 @@
+<div class="list">
+<mat-card style="width: fit-content;">
+  <mat-card-header>
+    <mat-card-title>Utilizatori</mat-card-title>
+  </mat-card-header>
+  <mat-card-actions>
+    <button mat-button (click)="inregistrareUtilizator()">
+      <mat-icon>add</mat-icon>
+      Inregistreaza
+    </button>
+    <button mat-flat-button (click)="reset()">
+      <mat-icon>refresh</mat-icon>Reset
+    </button>
+  </mat-card-actions>
+  <mat-card-content>
+       <table mat-table [dataSource]="dataSource" matSort>
+          <!-- uid Column -->
+        <ng-container matColumnDef="uid">
+          <th mat-header-cell *matHeaderCellDef >
+            <mat-form-field >
+              <mat-label>uid</mat-label>
+               <mat-select  name="{{getFilterObjectByName('uid').columnProp}}" [(ngModel)]="getFilterObjectByName('uid').modelValue"
+               (selectionChange)="filterChange(getFilterObjectByName('uid'),$event)">
+                <mat-option [value]="">-- Select uid --</mat-option>
+                 <mat-option [value]="item" *ngFor="let item of getFilterObjectByName('uid').options">{{item}}</mat-option>
+               </mat-select>
+             </mat-form-field>
+          </th>
+          <td mat-cell *matCellDef="let row" data-label="UID"> {{row.uid}} </td>
+        </ng-container>
+         <!-- displayName Column -->
+        <ng-container matColumnDef="displayName">
+          <th mat-header-cell *matHeaderCellDef >
+             <mat-form-field >
+              <mat-label>Display name</mat-label>
+               <mat-select  name="{{getFilterObjectByName('displayName').columnProp}}" [(ngModel)]="getFilterObjectByName('displayName').modelValue"
+               (selectionChange)="filterChange(getFilterObjectByName('displayName'),$event)">
+                <mat-option [value]="">-- Select display name --</mat-option>
+                 <mat-option [value]="item" *ngFor="let item of getFilterObjectByName('displayName').options">{{item}}</mat-option>
+               </mat-select>
+             </mat-form-field>
+          </th>
+          <td mat-cell *matCellDef="let row" data-label="Display name"> {{row.displayName}} </td>
+        </ng-container>
+         <!-- email Column -->
+         <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef >
+            <mat-form-field >
+              <mat-label>Email</mat-label>
+               <mat-select name="{{getFilterObjectByName('email').columnProp}}" [(ngModel)]="getFilterObjectByName('email').modelValue"
+               (selectionChange)="filterChange(getFilterObjectByName('email'),$event)">
+                <mat-option [value]="">-- Select email --</mat-option>
+                 <mat-option [value]="item" *ngFor="let item of getFilterObjectByName('email').options">{{item}}</mat-option>
+               </mat-select>
+             </mat-form-field>
+          </th>
+          <td mat-cell *matCellDef="let row" data-label="Email"> <a class="link" (click)=view(row)>{{row.email}} </a></td>
+        </ng-container>
+        <!-- emailVerfied Column -->
+        <ng-container matColumnDef="emailVerified">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-form-field >
+              <mat-label>Email verificat</mat-label>
+               <mat-select name="{{getFilterObjectByName('emailVerified').columnProp}}" [(ngModel)]="getFilterObjectByName('emailVerified').modelValue"
+               (selectionChange)="filterChange(getFilterObjectByName('emailVerified'),$event)">
+                <mat-option [value]="">-- Select verified --</mat-option>
+                 <mat-option [value]="item" *ngFor="let item of getFilterObjectByName('emailVerified').options">{{item}}</mat-option>
+               </mat-select>
+             </mat-form-field>
+          </th>
+          <td mat-cell *matCellDef="let row" data-label="Email verificat"> {{row.emailVerified}} </td>
+        </ng-container>
+        <!-- Is admin Column -->
+        <ng-container matColumnDef="IsAdmin">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-form-field >
+              <mat-label>Admin</mat-label>
+               <mat-select name="{{getFilterObjectByName('isAdmin').columnProp}}" [(ngModel)]="getFilterObjectByName('isAdmin').modelValue"
+               (selectionChange)="filterChange(getFilterObjectByName('isAdmin'),$event)">
+                <mat-option [value]="">-- Select Admin --</mat-option>
+                 <mat-option [value]="item" *ngFor="let item of getFilterObjectByName('isAdmin').options">{{item}}</mat-option>
+               </mat-select>
+             </mat-form-field>
+          </th>
+          <td mat-cell *matCellDef="let row" data-label="Is admin">
+            <div class="text-center d-none d-md-block">
+              {{utilizatori.userIsAdmin(row)}}
+            </div>
+            @if(!utilizatori.userIsAdmin(row)){
+              <div class="text-center-md">
+                <button matSuffix mat-icon-button aria-label="Add"  matTooltip="Adaugare rol admin" (click)="addRole(row,'admin')">
+                  <mat-icon>add</mat-icon>
+               </button>
+              </div>
+            }
+            @if(utilizatori.userIsAdmin(row)){
+              <div class="text-center-md">
+                <button matSuffix mat-icon-button aria-label="Remove" matTooltip="Eliminare rol admin" (click)="removeRole(row,'admin')">
+                 <mat-icon>remove</mat-icon>
+               </button>
+              </div>
+            }
+
+
+          </td>
+        </ng-container>
+        <!-- Is furnizor Column -->
+        <ng-container matColumnDef="IsFurnizor">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-form-field >
+              <mat-label>Furnizor</mat-label>
+               <mat-select name="{{getFilterObjectByName('isFurnizor').columnProp}}" [(ngModel)]="getFilterObjectByName('isFurnizor').modelValue"
+               (selectionChange)="filterChange(getFilterObjectByName('isFurnizor'),$event)">
+                <mat-option [value]="">-- Select Furnizor --</mat-option>
+                 <mat-option [value]="item" *ngFor="let item of getFilterObjectByName('isFurnizor').options">{{item}}</mat-option>
+               </mat-select>
+             </mat-form-field>
+          </th>
+          <td mat-cell *matCellDef="let row" data-label="Is furnizor">
+            <div class="text-center d-none d-md-block">
+              {{utilizatori.userIsFurnizor(row)}}
+            </div>
+            @if(!utilizatori.userIsFurnizor(row)){
+              <div class="text-center-md">
+                <button matSuffix mat-icon-button aria-label="Add" matTooltip="Adaugare rol furnizor" (click)="addRole(row,'furnizor')">
+                  <mat-icon>add</mat-icon>
+               </button>
+              </div>
+            }
+            @if(utilizatori.userIsFurnizor(row)){
+              <div class="text-center-md">
+                <button matSuffix mat-icon-button aria-label="Remove" matTooltip="Eliminare rol furnizor" (click)="removeRole(row,'furnizor')">
+                 <mat-icon>remove</mat-icon>
+               </button>
+              </div>
+            }
+
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="View">
+          <th mat-header-cell *matHeaderCellDef>
+
+          </th>
+          <td mat-cell *matCellDef="let row" data-label="Detalii">
+            <div style="text-align: center;">
+              <button matSuffix mat-icon-button aria-label="View" matTooltip="View" (click)="view(row)">
+                <mat-icon>person</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Delete">
+          <th mat-header-cell *matHeaderCellDef>
+
+          </th>
+          <td mat-cell *matCellDef="let row" data-label="Actiune">
+            <div class="text-center-md">
+              <button matSuffix mat-icon-button aria-label="Delete" [matTooltip]="'Delete'" (click)="delete(row)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsExt"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsExt;"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{filterValue}}"</td>
+        </tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+           showFirstLastButtons
+           aria-label="Select page of users">
+        </mat-paginator>
+  </mat-card-content>
+</mat-card>
+<router-outlet></router-outlet>
+</div>

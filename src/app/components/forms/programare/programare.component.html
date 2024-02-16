@@ -1,0 +1,74 @@
+<h2 mat-dialog-title>{{submitted?"Rezervare realizata cu succes!":"Programare"}}</h2>
+<mat-dialog-content>
+@if(!submitted){
+
+  <h3>Serviciul {{serviciu.nume}} furnizat de {{serviciu.furnizor}}</h3>
+<h4>Data {{slot.zi.getDate() +'.'+(1+slot.zi.getMonth())+ '.'+slot.zi.getFullYear() }} Ora {{slot.start}}</h4>
+<form [formGroup]="dataForm" #formDirective="ngForm"(ngSubmit)="creaza()">
+<div class="row">
+<mat-form-field class="col-12 col-md-6 pe-2">
+  <mat-icon matPrefix>text_fields</mat-icon>
+  <mat-label>Nume</mat-label>
+  <input type="text" matInput placeholder="Nume *"  [(ngModel)]="solicitant.nume" formControlName="nume" required [readonly]="readonly">
+</mat-form-field>
+<mat-form-field class="col-12 col-md-6" >
+  <mat-icon matPrefix>text_fields</mat-icon>
+  <mat-label>Prenume</mat-label>
+  <input type="text" matInput placeholder="Prenume *"  [(ngModel)]="solicitant.prenume" formControlName="prenume" required [readonly]="readonly">
+</mat-form-field>
+</div>
+<div class="row">
+<mat-form-field class="col-12 " >
+  <mat-icon matPrefix>mail</mat-icon>
+  <mat-label>Email</mat-label>
+  <input type="text" matInput  placeholder="Email *"  [(ngModel)]="solicitant.email" formControlName="email" required [readonly]="readonly">
+</mat-form-field>
+</div>
+<div class="row">
+<mat-form-field class="col12 col-md-6 pe-2" >
+  <mat-icon matPrefix>text_fields</mat-icon>
+  <mat-label>CNP</mat-label>
+  <input type="text" matInput placeholder="CNP *" [(ngModel)]="solicitant.cnp" formControlName="cnp" required [readonly]="readonly">
+</mat-form-field>
+<mat-form-field class="col-12 col-md-6" >
+  <mat-icon matPrefix>phone</mat-icon>
+  <mat-label>Telefon</mat-label>
+  <input type="text" matInput placeholder="telefon" [(ngModel)]="solicitant.telefon" formControlName="telefon" required [readonly]="readonly">
+</mat-form-field>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Renunta</button>
+  @if (!readonly) {
+    <button  [disabled]="dataForm.invalid"    type="submit" mat-raised-button>Trimite</button>
+  }
+</mat-dialog-actions>
+</form>
+}@else {
+  <h3 class="m-0">Ati facut o rezervare la serviciul {{serviciu.nume}} furnizat de {{serviciu.furnizor}}</h3>
+  <h4 *ngIf="serviciu.are_prestator" class="m-0">{{serviciu.prestator}} {{(serviciu.prestatie!=''?'-':'')+serviciu.prestatie}}</h4>
+  <h4 class="m-0">in data <strong>{{('0'+slot.zi.getDate()).slice(-2) +'.'+('0'+(1+slot.zi.getMonth())).slice(-2)+ '.'+slot.zi.getFullYear() }} ora {{slot.start}} </strong></h4>
+  <table class="mt-3 mb-3">
+    <tr>
+      <td>Nume:</td><td><strong>{{solicitant.nume}}  {{solicitant.prenume}}</strong></td>
+    </tr>
+    <tr>
+      <td>CNP:</td><td><strong>{{solicitant.cnp}}</strong></td>
+    </tr>
+    <tr>
+      <td>Telefon:</td><td><strong>{{solicitant.telefon}}</strong></td>
+    </tr>
+    <tr>
+      <td>Email:</td><td><strong>{{solicitant.email}}</strong></td>
+    </tr>
+  </table>
+  Veti primi un email de confirmare la adresa <strong>{{solicitant.email}}</strong> pentru realizarea programarii.
+  <mat-dialog-actions align="end" class="mt-2">
+    <button mat-button [mat-dialog-close]="solicitant">Programare noua</button>
+    <button  mat-raised-button [mat-dialog-close]="" >Ok</button>
+  </mat-dialog-actions>
+}
+
+
+</mat-dialog-content>
+
+

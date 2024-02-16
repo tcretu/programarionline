@@ -1,0 +1,42 @@
+@if(currentData){
+  <div class="login-container">
+    <div class="login-content">
+      <mat-card>
+        <mat-card-header class="mb-4">
+          <mat-card-title>{{title}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+        <form [formGroup]="dataForm" #formDirective="ngForm"
+        (ngSubmit)="update()">
+        <mat-form-field>
+					<mat-icon matPrefix>format_list_bulleted</mat-icon>
+          <mat-label>Tip</mat-label>
+					<input type="text" matInput placeholder="Tip *" [formControl]="tipControl" [(ngModel)]="currentData.tip" formControlName="tip" required [matAutocomplete]="auto">
+          <mat-autocomplete  #auto="matAutocomplete">
+            @for (option of filteredOptions|async; track option) {
+              <mat-option [value]="option">{{option}}</mat-option>
+            }
+          </mat-autocomplete>
+				</mat-form-field>
+        <mat-form-field>
+					<mat-icon matPrefix>text_fields</mat-icon>
+          <mat-label>Nume</mat-label>
+					<input type="text" matInput placeholder="Nume *" [(ngModel)]="currentData.nume" formControlName="nume" required>
+				</mat-form-field>
+        <mat-form-field>
+					<mat-icon matPrefix>edit_note</mat-icon>
+          <mat-label>Descriere</mat-label>
+					<input type="text" matInput placeholder="Descriere" [(ngModel)]="currentData.descriere" formControlName="descriere" >
+				</mat-form-field>
+          <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close>Inchide</button>
+            <button [disabled]="dataForm.invalid" [mat-dialog-close]="true"   type="submit" mat-raised-button>{{currentData.id ? 'Actualizeaza':'Salveaza'}}</button>
+          </mat-dialog-actions>
+        </form>
+      </mat-card-content>
+      </mat-card>
+
+    </div>
+  </div>
+
+}

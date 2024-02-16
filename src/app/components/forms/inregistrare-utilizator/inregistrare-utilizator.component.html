@@ -1,0 +1,109 @@
+<div class="login-container" [ngClass]="{'dialog':isModal}">
+	<div class="login-content">
+    <h1 class="text-center">{{appName}}</h1>
+		<mat-card>
+      <mat-card-header>
+        <mat-toolbar *ngIf="!isModal" class="login-toolbar" color="primary">
+          {{title}}
+        </mat-toolbar>
+        <mat-card-title *ngIf="isModal">{{title}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+			<form class="mt-4" [formGroup]="registerForm" #formDirective="ngForm"
+          (ngSubmit)="onSubmit(registerForm, formDirective)">
+				<mat-form-field>
+					<mat-icon matPrefix>email</mat-icon>
+					<input type="email" matInput placeholder="Email *" formControlName="email">
+					@if(checkValidation('email')){
+            <mat-error>{{ emaiErrors() }}</mat-error>
+          }
+				</mat-form-field>
+				<mat-form-field>
+					<mat-icon matPrefix>lock_outline</mat-icon>
+          <mat-icon matSuffix (click)="togglePassword()" *ngIf="!paswordVisible" title="Arata parola">visibility</mat-icon>
+          <mat-icon matSuffix (click)="togglePassword()" *ngIf="paswordVisible" title="Ascunde parola">visibility_off</mat-icon>
+					<input [type]="(paswordVisible? 'text':'password')" autocomplete="false" matInput placeholder="Password *" formControlName="password">
+          <mat-hint>Alegeti o parola de cel putin 6 caractere, o litera mare si o cifra</mat-hint>
+      <mat-error *ngIf="checkValidation('password')">
+        {{ getErrorPassword() }}
+      </mat-error>
+				</mat-form-field>
+			<div class="socialMediaFlex mb-2 mt-4">
+        	<button *ngIf="isModal" mat-button (click)="closeIfModal()">Inchide</button><button  [disabled]="registerForm.invalid"    type="submit" mat-raised-button color="primary">Inregistreaza</button>
+      </div>
+			</form>
+    </mat-card-content>
+		</mat-card>
+    <p class="text-center mt-2" *ngIf="!authService.isAdmin">
+      <span>Autentificare cu <button mat-button color="primary" type="button" (click)="authService.GoogleAuth()" >Google</button>
+      </span>
+      <span>
+        Deja am cont <button mat-button color="primary" type="button" (click)="goToLogin()" >Log in</button>
+      </span>
+    </p>
+    <p class="text-center" *ngIf="!authService.isAdmin"><button mat-button color="primary" type="button" routerLink="">Fa o programare</button></p>
+  </div>
+</div>
+
+
+
+
+
+
+<section style="display: none;">
+  <div class="card-body">
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+        <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-3">Sign up </p>
+        <!-- Email input -->
+        <div class="formGroup">
+          <input
+            type="email"
+            class="formControl"
+            placeholder="Email Address"
+            #userEmail
+            required
+          />
+        </div>
+         <!-- Password input -->
+         <div class="formGroup">
+          <input
+            type="password"
+            class="formControl"
+            placeholder="Password"
+            #userPwd
+            required
+          />
+        </div>
+        <!--Register Button-->
+        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+          <button
+            type="submit"
+            color="primary"
+            class="btn btn-primary btn-lg btn-block"
+            (click)="authService.Register(userEmail.value, userPwd.value)">
+              Register
+          </button>
+        </div>
+        <!-- Connect with google -->
+        <div class="divider d-flex align-items-center mb-4">
+         <p class="text-center fw-bold mx-3 mb-0">Or use  </p>
+          <button class="btn btn-danger" type="button" (click)="authService.GoogleAuth()" >Google</button>
+        </div>
+        <div class="redirectToLogin">
+          <span>
+            Already have an account?
+            <span class="redirect" routerLink="/sign-in">Log In</span>
+            </span>
+        </div>
+        </div>
+      <!--Image-->
+      <div class="col-md-9 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+             class="img-fluid"
+             alt="Register Image"
+        >
+      </div>
+    </div>
+  </div>
+</section>

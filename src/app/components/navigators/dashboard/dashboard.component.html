@@ -1,0 +1,190 @@
+<div class="app-container" [class.is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary" class="toolbar">
+    <button *ngIf="!mobileQuery.matches" mat-icon-button (click)="isExpanded = !isExpanded"  matTooltip="Menu"><mat-icon>menu</mat-icon></button>
+    <button *ngIf="mobileQuery.matches" mat-icon-button [matMenuTriggerFor]="sidenavMenu"  matTooltip="Menu"><mat-icon>menu</mat-icon></button>
+    <h2 class="app-name">{{appName}}</h2>
+    <span class="toolbar-item-spacer"></span>
+    <button *ngIf="!mobileQuery.matches" mat-icon-button [matTooltip]="'Programarionline account\n'+authService.UserData.displayName+ '\n'+authService.UserData.email" [matMenuTriggerFor]="userAccountMenu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below">
+    <button mat-menu-item (click)="onProfil()">
+        <mat-icon>person</mat-icon><span>Profil</span>
+    </button>
+      <button mat-menu-item  (click)="onInfo()">
+        <mat-icon>info</mat-icon><span>Informatii aplicatie</span>
+    </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="logOut()">
+          <mat-icon>exit_to_app</mat-icon>Logout
+      </button>
+  </mat-menu>
+  <mat-menu #sidenavMenu [overlapTrigger]="false" yPosition="below">
+    <button mat-menu-item (click)="onProfil()">
+      <mat-icon>person</mat-icon><span>Profil</span>
+    </button>
+    <button mat-menu-item  (click)="onInfo()">
+      <mat-icon>info</mat-icon><span>Informatii aplicatie</span>
+    </button>
+    <button mat-menu-item (click)="logOut()">
+        <mat-icon>exit_to_app</mat-icon>Logout
+    </button>
+    <mat-divider></mat-divider>
+      <button mat-menu-item [routerLink]="'programari'">
+        <mat-icon mat-list-icon  matTooltip="Programari">calendar_month</mat-icon>
+        Programari
+      </button>
+
+      <button mat-menu-item [routerLink]="'servicii'">
+        <mat-icon mat-list-icon  matTooltip="Servicii">shopping_cart</mat-icon>
+        Servicii
+      </button>
+
+      <button mat-menu-item [routerLink]="'furnizori'" *ngIf="authService.isAdmin">
+        <mat-icon mat-list-icon  matTooltip="Furnizori">medical_services</mat-icon>
+        Furnizori
+      </button>
+
+      <button mat-menu-item [routerLink]="'utilizatori'" *ngIf="authService.isAdmin">
+        <mat-icon mat-list-icon  matTooltip="Utilizatori">group</mat-icon>
+        Utilizatori
+      </button>
+
+      <button mat-menu-item [routerLink]="'parametri'" *ngIf="authService.isAdmin">
+        <mat-icon mat-list-icon  matTooltip="Parametri">settings</mat-icon>
+        Parametri
+      </button>
+  </mat-menu>
+  </mat-toolbar>
+
+<mat-sidenav-container  autosize class="sidenav-container"  [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+  <mat-sidenav *ngIf="!mobileQuery.matches" #sidenav mode="side" opened="isExpanded" [mode]="mobileQuery.matches ? 'over' : 'side'"
+  [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+    <mat-nav-list>
+      <mat-list-item [routerLink]="'programari'" *ngIf="authService.isAdmin || authService.isFurnizor">
+        <mat-icon mat-list-icon  matTooltip="Programari">calendar_month</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Programari</span>
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="'servicii'" *ngIf="authService.isAdmin || authService.isFurnizor">
+        <mat-icon mat-list-icon  matTooltip="Servicii">shopping_cart</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Servicii</span>
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="'furnizori'" *ngIf="authService.isAdmin">
+        <mat-icon mat-list-icon  matTooltip="Furnizori">medical_services</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Furnizori</span>
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="'utilizatori'" *ngIf="authService.isAdmin">
+        <mat-icon mat-list-icon  matTooltip="Utilizatori">group</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Utilizatori</span>
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="'parametri'" *ngIf="authService.isAdmin">
+        <mat-icon mat-list-icon  matTooltip="Parametri">settings</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Parametri</span>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Content - rendered Content for the current router path into the <router-outlet>, e.g. /dashboard or /info-->
+  <mat-sidenav-content class="p-2">
+    <div *ngIf="!(authService.isAdmin || authService.isFurnizor)">
+      <h2>Nu ati fost validat inca de administrator!</h2><br>
+      <button mat-button (click)="authService.Logout()">
+        <mat-icon>exit_to_app</mat-icon>Logout
+      </button>
+    </div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+</div>
+
+
+
+
+
+
+
+<div style="display:none">
+<!-- Top navigation -->
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <!-- Container wrapper -->
+  <div class="container-fluid">
+    <!-- Toggle button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-mdb-toggle="collapse"
+      data-mdb-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+
+
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Navbar brand -->
+      <a class="navbar-brand mt-2 mt-lg-0" href="#">
+        <img
+          src="https://lh4.googleusercontent.com/ao2OVkzDALEsRM-6MuPJjhepmoKiLRg1lV-6KzCmSmCbiZFe7hICmT719xzJTr6NcG7re5p0AWeGBgPAsSdx7MO0y77LJxG9twwb32_JrSY0zXxRJ1guv6jovwDI_NJKhh0YzLeSF5HiX_aB6o065RBpgOiZJga-rG3vBJkIl_OGKaq02mlg8mGSuBcrLN6K=w1280"
+          height="15"
+          alt="Programari online"
+          loading="lazy"
+        />
+      </a>
+      <!-- Left links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="authService.isAdmin" routerLink="/user-list">UserList</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="authService.Logout()" >LogOut</a>
+        </li>
+      </ul>
+      <!-- Left links -->
+    </div>
+    <!-- Collapsible wrapper -->
+  </div>
+  <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
+<!-- Sidebar navigation -->
+<div class="container-fluid">
+  <div class="row">
+    <!-- Main content -->
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div class="inner-adjust">
+        <div class="pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">User Profile</h1>
+        </div>
+        <!-- Show user data when logged in -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="media">
+              <img class="align-self-start mr-5 img-thumbnail rounded-circle" src="{{(authService.UserData.photoURL) ? authService.UserData.photoURL : '/assets/dummy-user.png'}}"
+                alt="{{authService.UserData.displayName}}">
+              <div class="media-body">
+                <h1>Hello: <strong>{{(authService.UserData.displayName) ? authService.UserData.displayName : 'User'}}</strong></h1>
+                <p>User ID: <strong>{{authService.UserData.uid}}</strong></p>
+                <p>Email: <strong>{{authService.UserData.email}}</strong></p>
+                <p>Email Verified: <strong>{{authService.UserData.emailVerified}}</strong></p>
+                <p>Is admin: <strong>{{authService.isAdmin}}</strong></p>
+                <p>Is furnizor: <strong>{{authService.isFurnizor}}</strong></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</div>

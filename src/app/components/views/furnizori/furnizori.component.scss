@@ -1,0 +1,29 @@
+.dialog{
+  position: absolute;
+  left: 0;
+  top:0;
+  z-index: 3;
+}
+
+.backdrop{
+  position:absolute;
+  opacity: 1;
+  z-index: 2;
+  background:rgba(0,0,0,.32);
+  height:100vh;
+  width: 100%;
+  top: 0;
+  left:0;
+}
+.list{
+  position: absolute;
+  left: 0;
+  top:0;
+  z-index: 1;
+}
+
+.link{
+  color:blue;
+  text-decoration: underline;
+  cursor: pointer;
+}

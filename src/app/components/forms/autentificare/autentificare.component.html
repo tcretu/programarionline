@@ -1,0 +1,118 @@
+<div class="login-container">
+	<div class="login-content">
+    <h1 class="text-center">{{appName}}</h1>
+
+		<mat-card>
+      <mat-card-header>
+        <mat-toolbar class="login-toolbar" color="primary">
+          Autentificare
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+			<form class="mt-4" [formGroup]="registerForm" #formDirective="ngForm"
+  (ngSubmit)="onSubmit(registerForm, formDirective)">
+				<mat-form-field>
+					<mat-icon matPrefix>email</mat-icon>
+					<input type="email" matInput placeholder="Email *" formControlName="email">
+					@if(checkValidation('email')){
+            <mat-error>{{ emaiErrors() }}</mat-error>
+          }
+				</mat-form-field>
+
+
+				<mat-form-field>
+					<mat-icon matPrefix>lock_outline</mat-icon>
+          <mat-icon matSuffix (click)="togglePassword()" *ngIf="!paswordVisible" title="Arata parola">visibility</mat-icon>
+          <mat-icon matSuffix (click)="togglePassword()" *ngIf="paswordVisible" title="Ascunde parola">visibility_off</mat-icon>
+					<input [type]="(paswordVisible? 'text':'password')" autocomplete="false" matInput placeholder="Password *" formControlName="password">
+      <mat-error *ngIf="checkValidation('password')">
+        {{ getErrorPassword() }}
+      </mat-error>
+				</mat-form-field>
+        <p class="mt-0 pt-1 mb-0">Am uitat parola?
+          <button mat-button type="button"  routerLink="/forgot-password"
+          color="primary">Trimite email </button></p>
+
+			<div class="socialMediaFlex mb-2 mt-4">
+        	<button style="width:50%" [disabled]="registerForm.invalid"    type="submit" mat-raised-button color="primary">Login</button>
+      </div>
+			</form>
+    </mat-card-content>
+		</mat-card>
+    <p > </p>
+    <p class="text-center">
+      <span>
+        Autentificare cu
+        <button mat-button color="primary" type="button" (click)="authService.GoogleAuth()">
+          Google
+        </button>
+      </span>
+      <span>
+        Nu am cont
+        <button mat-button color="primary" type="button" (click)="goToRegister()">
+          Inregistreaza-te
+        </button>
+      </span>
+    </p>
+    <p class="text-center">
+      <span>
+        <button mat-button color="primary" type="button" routerLink="">
+          Fa o programare
+        </button>
+      </span>
+    </p>
+  </div>
+</div>
+
+
+
+
+<section style="display: none;">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+          class="img-fluid" alt="Login Image">
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+         <!-- Email input -->
+         <div class="formGroup">
+          <input type="text" class="formControl" placeholder="Username" #userName required>
+        </div>
+        <!-- Password input -->
+        <div class="formGroup">
+          <input type="password" class="formControl" placeholder="Password" #userPassword required>
+        </div>
+        <!--Redirectio to register components -->
+            <div class="text-center text-lg-start mt-4 pt-2">
+              <p class="small mt-2 pt-1 mb-0">Forget Password ?
+                <a  routerLink="/forgot-password"
+                    class="link-danger">send email </a></p>
+            </div>
+          <!--Login Button -->
+          <div class="text-center mt-4 pt-2">
+            <button
+              type="submit"
+              color="primary"
+              class="btn btn-primary btn-lg btn-block"
+              (click)="authService.Login(userName.value, userPassword.value)">
+                 Login
+            </button>
+          </div>
+          <!--Redirectio to register components -->
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <p class="small mt-2 pt-1 mb-0">Don't have an account?
+              <a
+              routerLink="/register-user"
+              class="link-danger">Register</a></p>
+          </div>
+        <!-- Connect with google -->
+          <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+            <p class="lead fw-normal mb-2 me-3">Sign in with</p>
+            <!-- Connect with google -->
+            <button class="btn btn-danger" type="button" (click)="authService.GoogleAuth()">Google</button>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>

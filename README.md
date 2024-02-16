@@ -25,3 +25,11 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+To manage firebase (`https://console.firebase.google.com/`) with user 2000cretueugen@gmail.com
+
+To publish on firebase first build (run `ng build`) and then  Run `firebase deploy`
+
+Demo link at `https://programari-online-69002.web.app/`
+
+Source code at `https://github.com/tcretu/programarionline`

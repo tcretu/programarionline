@@ -1,0 +1,90 @@
+      <mat-card>
+        <mat-card-header *ngIf="!readOnly" class="mb-4">
+          <mat-card-title>{{title}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="pt-0 pb-0">
+        <form [formGroup]="dataForm" #formDirective="ngForm"
+        (ngSubmit)="update()">
+        <div class="row">
+        <mat-form-field class="col-12 col-md-6 pe-2" [ngClass]="{'readonly':readOnly}">
+					<mat-icon matPrefix>text_fields</mat-icon>
+          <mat-label>Nume</mat-label>
+					<input type="text" matInput placeholder="Nume *"  [(ngModel)]="currentData.nume" formControlName="nume" required>
+				</mat-form-field>
+        <mat-form-field class="col-12 col-md-6" [ngClass]="{'readonly':readOnly}">
+					<mat-icon matPrefix>mail</mat-icon>
+          <mat-label>Email</mat-label>
+          <mat-select placeholder="Email *"  [(ngModel)]="currentData.email" formControlName="email" required>
+            @for (option of lstEmailUtilizatori; track option) {
+              <mat-option [value]="option">{{option}}</mat-option>
+            }
+          </mat-select>
+				</mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="col12 col-md-6 pe-2" [ngClass]="{'readonly':readOnly}">
+					<mat-icon matPrefix>text_fields</mat-icon>
+          <mat-label>CUI</mat-label>
+					<input type="text" matInput placeholder="CUI *" [(ngModel)]="currentData.cui" formControlName="cui" required>
+				</mat-form-field>
+        <mat-form-field class="col-12 col-md-6" [ngClass]="{'readonly':readOnly}">
+					<mat-icon matPrefix>phone</mat-icon>
+          <mat-label>Telefon</mat-label>
+					<input type="text" matInput placeholder="telefon" [(ngModel)]="currentData.telefon" formControlName="telefon" required>
+				</mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="col-12 col-md-6 pe-2" [ngClass]="{'readonly':readOnly}">
+					<mat-icon matPrefix>map</mat-icon>
+          <mat-label>Judet</mat-label>
+          <mat-select placeholder="Judet *"  [(ngModel)]="currentData.judet" formControlName="judet" required>
+            @for (option of lstJudetParametri; track option) {
+              <mat-option [value]="option">{{option}}</mat-option>
+            }
+          </mat-select>
+				</mat-form-field>
+        <mat-form-field class="col-12 col-md-6" [ngClass]="{'readonly':readOnly}">
+					<mat-icon matPrefix>location_on</mat-icon>
+          <mat-label>Localitate</mat-label>
+					<input type="text" matInput placeholder="Localitate *" [(ngModel)]="currentData.localitate" formControlName="localitate" required>
+				</mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="col-12" [ngClass]="{'readonly':readOnly}">
+					<mat-icon matPrefix>edit_road</mat-icon>
+          <mat-label>Strada</mat-label>
+					<input type="text" matInput placeholder="Strada" [(ngModel)]="currentData.strada" formControlName="strada">
+				</mat-form-field>
+      </div>
+        <div class="row">
+        <mat-form-field class="col-6 col-md-3 pe-2" [ngClass]="{'readonly':readOnly}">
+					<mat-icon matPrefix>numbers</mat-icon>
+          <mat-label>Nr</mat-label>
+					<input type="text" matInput placeholder="Nr" [(ngModel)]="currentData.nr" formControlName="nr">
+				</mat-form-field>
+        <mat-form-field class="col-6 col-md-3 pe-2" [ngClass]="{'readonly':readOnly}">
+					<mat-icon matPrefix>apartment</mat-icon>
+          <mat-label>Bl</mat-label>
+					<input type="text" matInput placeholder="Bl" [(ngModel)]="currentData.bl" formControlName="bl">
+				</mat-form-field>
+        <mat-form-field class="col-6 col-md-3 pe-2" [ngClass]="{'readonly':readOnly}">
+					<mat-icon matPrefix>stairs</mat-icon>
+          <mat-label>Sc</mat-label>
+					<input type="text" matInput placeholder="Sc" [(ngModel)]="currentData.sc" formControlName="sc">
+				</mat-form-field>
+        <mat-form-field class="col-6 col-md-3" [ngClass]="{'readonly':readOnly}">
+					<mat-icon matPrefix>night_shelter</mat-icon>
+          <mat-label>Ap</mat-label>
+					<input type="text" matInput placeholder="Ap" [(ngModel)]="currentData.ap" formControlName="ap">
+				</mat-form-field>
+        </div>
+
+          <mat-dialog-actions *ngIf="!readOnly" align="end">
+            <button mat-button mat-dialog-close>Inchide</button>
+            <button  [mat-dialog-close]="true" [disabled]="dataForm.invalid"    type="submit" mat-raised-button>{{currentData.id ? 'Actualizeaza':'Salveaza'}}</button>
+          </mat-dialog-actions>
+        </form>
+      </mat-card-content>
+      </mat-card>
+
+

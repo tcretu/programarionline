@@ -1,0 +1,79 @@
+
+.link{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+.login{
+  position: absolute;
+  right:.25rem;
+  top:1.5rem;
+}
+
+
+.domeniu{
+  height: 200px;
+  margin: .25rem;
+}
+
+.calendar-wrapper{
+  width: 300px;
+}
+
+.sloturi li{
+  margin: 0.25rem;
+  border-radius: 0.25rem;
+  line-height: 1.5rem;
+  padding: 0.25rem;
+}
+
+.sloturi li{
+  color:gray;
+  border-color: gray;
+}
+
+.sloturi li.trecut{
+display: none;
+}
+
+.sloturi li.ocupat{
+  background-color: rgb(201, 224, 234);
+  border-color: blue;
+  color: black;
+}
+
+.sloturi li.confirmat,.sloturi li.confirmat.ocupat{
+  background-color: rgb(107, 196, 145);
+  border-color: green;
+  color: black;
+}
+
+.sloturi li.anulat,.sloturi li.anulat.confirmat, .sloturi li.anulat.confirmat.ocupat{
+  background-color: rgb(223, 127, 114);
+  border-color: red;
+  color: black;
+}
+
+
+.link-blue{
+  padding-left: 1rem;
+  cursor: pointer;
+  display: inline-block;
+}
+
+
+
+@media screen and (max-width: 767px) {
+  .calendar-wrapper{
+    width: 100%;
+  }
+  .domeniu{
+    height: auto;
+    margin: .25rem;
+  }
+
+}
+
+
+

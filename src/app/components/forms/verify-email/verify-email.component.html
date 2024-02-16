@@ -1,0 +1,14 @@
+		<mat-card *ngIf="authService.UserData as user">
+      <mat-card-header>
+        <mat-card-title>Multumim pentru inregistrare!</mat-card-title>
+        <mat-card-subtitle>Am trimis un e-mail de confirmare la adresa specificata.</mat-card-subtitle>
+        <mat-card-subtitle>Va rugam verificati casuta de e-mail si dati click pe link-ul primit pentru activare!</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions >
+        <button type="button" mat-button  (click)="goToLogin()">
+          <mat-icon>login</mat-icon>
+          Autentificare
+        </button>
+      </mat-card-actions>
+    </mat-card>
+

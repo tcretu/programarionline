@@ -1,0 +1,65 @@
+.list{
+  position: absolute;
+  left: 0;
+  top:0;
+  z-index: 1;
+}
+
+_table {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+}
+
+.mat-mdc-form-field-infix{
+  width: auto !important;
+}
+
+
+.mat-mdc-select {
+  font-size: 14px;
+}
+.mat-mdc-option {
+font-size: 14px;
+padding-left: 0;
+padding-right: 0;
+}
+
+_td, _th {
+  width: 18%;
+}
+
+
+.__demo-button-container {
+  padding-bottom: 16px;
+}
+
+.__demo-button + .demo-button {
+  margin-left: 8px;
+}
+
+.dialog{
+  position: absolute;
+  left: 0;
+  top:10px;
+  z-index: 3;
+}
+
+.backdrop{
+  position:absolute;
+  opacity: 1;
+  z-index: 2;
+  background:rgba(0,0,0,.32);
+  height:100vh;
+  width: 100%;
+  top: 0;
+  left:0;
+}
+.list{
+  position: absolute;
+  left: 0;
+  top:0;
+  z-index: 1;
+}

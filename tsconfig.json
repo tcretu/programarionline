@@ -18,6 +18,15 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
+    "paths": {
+      "@services/*":["src/app/shared/services/*"],
+      "@guards/*":["src/app/shared/guards/*"],
+      "@components/*":["src/app/components/*"],
+      "@models/*":["src/app/shared/models/*"],
+      "@environments/*":["src/environments/*"],
+      "@assets/*":["src/assets"],
+      "@shared/*":["src/app/shared/*"]
+    },
     "useDefineForClassFields": false,
     "lib": [
       "ES2022",

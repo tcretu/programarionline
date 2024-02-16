@@ -1,0 +1,75 @@
+
+.link{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+mat-card-content{
+  max-height: 200px;
+  overflow: auto;
+}
+.login{
+  position: absolute;
+  right:.25rem;
+  top:1.5rem;
+}
+
+.inapoi{
+  position: absolute;
+  left:.25rem;
+  top:1.5rem;
+}
+
+.domeniu{
+  height: 200px;
+  margin: .25rem;
+}
+
+.calendar-wrapper{
+  width: 300px;
+}
+
+.sloturi li{
+  margin: 0.25rem;
+  border-radius: 0.25rem;
+  line-height: 1.5rem;
+  padding: 0.25rem;
+}
+
+.sloturi li{
+  background-color: green;
+  color:white;
+}
+
+.sloturi li.trecut{
+display: none;
+}
+
+.sloturi li.ocupat{
+  background-color: red;
+  color:white;
+}
+.link-white{
+  color:white;
+  padding-left: 1rem;
+  cursor: pointer;
+}
+
+.text-white{
+  color:white;
+  padding-left: 1rem;
+}
+
+@media screen and (max-width: 767px) {
+  .calendar-wrapper{
+    width: 100%;
+  }
+  .domeniu{
+    height: auto;
+    margin: .25rem;
+  }
+
+}
+
+
+

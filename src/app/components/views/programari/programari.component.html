@@ -1,0 +1,143 @@
+<div class="list" id="Programari">
+  <mat-card class="w100">
+    <mat-card-header class="w100">
+      <mat-card-title-group>
+        <mat-card-title class="mb-2">
+          {{title}}
+        </mat-card-title>
+        <button *ngIf="selectedDate" class=" d-none d-app-block d-print-none float-right" mat-button aria-label="Print" [matTooltip]="'Print'" (click)="print();">
+          <mat-icon>print</mat-icon>
+        </button>
+        <button class="d-print-none float-right d-app-none" mat-button aria-label="Print" [matTooltip]="'Print'" onclick="window.print();">
+          <mat-icon>print</mat-icon>
+        </button>
+
+      </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content>
+      @if(!currentData){
+        <div class="row">
+          <div class="col-6 col-md-4 col-lg-3">
+            <mat-form-field class=" w100 me-2">
+              <mat-label>Judet</mat-label>
+              <mat-select  [(ngModel)]="judet"
+              (selectionChange)="load_data()">
+               <mat-option [value]="''">-- Toate--</mat-option>
+                <mat-option [value]="item" *ngFor="let item of lista_alfabetica_judete_servicii">{{item}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3">
+            <mat-form-field class="w100">
+              <mat-label>Localitate</mat-label>
+              <mat-select  [(ngModel)]="localitate"
+              (selectionChange)="load_data()">
+               <mat-option [value]="''">-- Toate--</mat-option>
+                <mat-option [value]="item" *ngFor="let item of lista_alfabetica_orase_din_judet">{{item}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3">
+            <mat-form-field class="w100">
+              <mat-icon matPrefix>search</mat-icon>
+              <mat-label>Cauta</mat-label>
+              <input type="text" matInput placeholder="Cauta" [(ngModel)]="search_value" (keyup)="load_data()" >
+              @if (search_value) {
+                <button matSuffix mat-icon-button aria-label="Clear" (click)="search_value='';load_data()">
+                  <mat-icon>close</mat-icon>
+                </button>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row" *ngIf="!domeniu_serviciu">
+          <div *ngFor="let domeniu of lista_alfabetica_domenii_servicii" class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <mat-card class="domeniu">
+              <mat-card-header>
+                <mat-card-title>
+                  <div matBadgeOverlap="false" matBadge="{{lista_alfabetica_servicii_din_domeniu(domeniu).length}}">{{domeniu | titlecase}}</div>
+                </mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <ul>
+                  <li *ngFor="let nume_serviciu of lista_alfabetica_servicii_din_domeniu(domeniu)">
+                    <a class="link" (click)="alege_serviciu(domeniu, nume_serviciu)">{{nume_serviciu | titlecase}}</a>
+                  </li>
+                </ul>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+        <div class="row1" *ngIf="domeniu_serviciu">
+          <button class="inapoi d-print-none" mat-button aria-label="Inapoi" [matTooltip]="'Inapoi'" (click)="domeniu_serviciu=null;">
+            <mat-icon>arrow_back</mat-icon>Catalog
+          </button>
+          <mat-card>
+            <mat-card-header>
+              <h2 class="text-center mb-0">Servicii de {{domeniu_serviciu.domeniu}} - {{domeniu_serviciu.serviciu}}</h2>
+            </mat-card-header>
+            <mat-card-content>
+              <ul>
+                <li *ngFor="let furnizor of lista_alfabetica_servicii_furnizori_dupa_domeniu_serviciu(domeniu_serviciu.domeniu, domeniu_serviciu.serviciu)">
+                  <div *ngIf="lista_alfabetica_servicii_prestatori_dupa_domeniu_serviciu_furnizor(domeniu_serviciu.domeniu, domeniu_serviciu.serviciu, furnizor).length > 0">
+                    {{furnizor}}
+                    <ul>
+                      <li *ngFor="let serviciu_prestator of lista_alfabetica_servicii_prestatori_dupa_domeniu_serviciu_furnizor(domeniu_serviciu.domeniu, domeniu_serviciu.serviciu, furnizor)">
+                           <a class="link" (click)="setCurrentData(serviciu_prestator)"> {{serviciu_prestator.prestator}} - {{serviciu_prestator.prestatie}} </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <a class="link"  (click)="setCurrentDataFrom(domeniu_serviciu.domeniu, domeniu_serviciu.serviciu, furnizor )" *ngIf="lista_alfabetica_servicii_prestatori_dupa_domeniu_serviciu_furnizor(domeniu_serviciu.domeniu, domeniu_serviciu.serviciu, furnizor).length == 0">{{furnizor}}</a>
+                </li>
+              </ul>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      }@else{
+        <button class="inapoi d-print-none" mat-button aria-label="Inapoi" [matTooltip]="'Inapoi'" (click)="goToPage(1)">
+          <mat-icon>arrow_back</mat-icon>Servicii
+        </button>
+        <h4 class="text-center mb-0">Serviciul {{currentData.nume}} furnizat de {{currentData.furnizor}} loc: {{currentData.localitate}} jud:{{currentData.judet}} </h4>
+        <h4 *ngIf="currentData.are_prestator" class="text-center mb-0">{{currentData.prestator + (currentData.prestatie!=''?'-':'' )+ currentData.prestatie}}</h4>
+        <div class="row">
+          <div class="col-12 col-md-4">
+            <h3 class="text-center">Data <span *ngIf="selectedDate" class=" d-md-none d-print-inline">:{{selectedDate.getDate()+'.'+(1+selectedDate.getMonth())+'.'+selectedDate.getFullYear()}}</span></h3>
+            <div class="calendar-wrapper m-3" [ngClass]="{'d-none d-md-block':selectedDate}">
+              <mat-calendar
+                  [dateClass]="dateClass"
+                  [selected]="selectedDate"
+                  [dateFilter]="dateFilter"
+                  [minDate]="minDate"
+                  [maxDate]="maxDate"
+                  (selectedChange)="onSelectedChange($event)"
+                  class="mat-elevation-z3 d-print-none">
+              </mat-calendar>
+            </div>
+          </div>
+          <div *ngIf="selectedDate" class="col-12 col-md-8">
+            <h3 class="text-center d-none d-md-block">Ora</h3>
+            <button class="d-block d-md-none d-print-none" mat-button  aria-label="Inapoi la calendar" [matTooltip]="'Inapoi la calendar'" (click)="selectedDate=null;">
+              <mat-icon>arrow_back</mat-icon> Inapoi la calendar
+            </button>
+                <ul  data-columns="2" class="sloturi w100">
+                    <li *ngFor="let slot of sloturi_viitoare"  [ngClass]="{'ocupat':programari.slot_ocupat(slot), 'anulat':programari.programare(slot).anulata, 'confirmat':programari.programare(slot).confirmata}">
+                        <div>{{slot.start}}</div>
+                          <a *ngIf="programari.slot_ocupat(slot)" class="link-blue" (click)="detalii_programare(programari.programare(slot))">
+                            <div>
+                              {{programari.programare(slot).solicitant.nume + ' '+programari.programare(slot).solicitant.prenume}}
+                            </div>
+                            <div>
+                              {{'tel:'+programari.programare(slot).solicitant.telefon + ' email:'+programari.programare(slot).solicitant.email}}
+                            </div>
+                          </a>
+                    </li>
+                </ul>
+          </div>
+        </div>
+      }
+
+    </mat-card-content>
+  </mat-card>
+</div>
+
+
