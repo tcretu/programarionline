@@ -97,8 +97,6 @@ private _filterJudet(value: string): string[] {
   );
   this.currentData = {...this.parametru!};
   this.title= (this.currentData.id? '':'Adaugare ')+ MODEL_NAME;
-//  this.getUtilizatoriEmailList();
-//  this.getParametriJudetList();
  }
 
 
@@ -168,7 +166,6 @@ private _filterJudet(value: string): string[] {
 
 
  close(){
-  //this.refreshList.emit();
   this.onclose.emit();
  }
 

@@ -5,6 +5,9 @@ import { environment as env } from '@environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { InformatiiAplicatieComponent } from '@components/forms/informatii-aplicatie/informatii-aplicatie.component';
 import { ProfilComponent } from '@components/forms/profil/profil.component';
+import { FurnizoriService } from '@services/furnizori.service';
+import { filter, map } from 'rxjs';
+import { Furnizor } from '@models/furnizor';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,8 +18,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   isExpanded: boolean = false;
   public appName=env.app.name;
   mobileQuery: MediaQueryList;
+  public furnizor:Furnizor | null=null;
   private _mobileQueryListener: () => void;
   constructor(public authService: AutentificareService,
+            protected furnizori:FurnizoriService,
             changeDetectorRef: ChangeDetectorRef,
             media: MediaMatcher,
             public dialogInfo:MatDialog) {
@@ -26,6 +31,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log(this.authService.UserData.email)
+    this.furnizori.getAllAsObservable().snapshotChanges().pipe(
+      map((changes:any)=>
+        changes.map((c:any) =>
+          ({ id: c.payload.doc.id, ...c.payload.doc.data() })
+        ))
+      ).subscribe(
+      (documents:any)=>{
+        console.log(documents)
+        documents = documents.filter((document:any)=>(document.email==this.authService.UserData.email));
+        if(documents.length > 0){
+          //setez furnizorul, presupus unic cu aceasta adresa de mail
+          this.furnizor = documents[0];
+        }
+      }
+      );
 
   }
 

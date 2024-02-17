@@ -91,12 +91,17 @@
   <!-- Content - rendered Content for the current router path into the <router-outlet>, e.g. /dashboard or /info-->
   <mat-sidenav-content class="p-2">
     <div *ngIf="!(authService.isAdmin || authService.isFurnizor)">
-      <h2>Nu ati fost validat inca de administrator!</h2><br>
+      <h2>Nu ati fost validat inca de <a class="link" (click)="onInfo()">administratorul aplicatiei!</a></h2><br>
       <button mat-button (click)="authService.Logout()">
         <mat-icon>exit_to_app</mat-icon>Logout
       </button>
     </div>
-    <router-outlet></router-outlet>
+    <div *ngIf="((!authService.isAdmin) && (!furnizor))">
+      <h2>Nu a fost definit inca un furnizor de servicii cu datele dumneavoastra. <br>Contactati <a class="link" (click)="onInfo()">administratorul aplicatiei!</a></h2>
+
+    </div>
+    <router-outlet>
+    </router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
 </div>

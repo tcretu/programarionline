@@ -111,7 +111,6 @@ export class AutentificareService {
     Login(email : string, password : string){
       return this.auth.signInWithEmailAndPassword(email, password)
       .then((result: any) => {
-        console.log(result.user);
         this.ngZone.run(() => {
           this.router.navigate(['dashboard']);
         });

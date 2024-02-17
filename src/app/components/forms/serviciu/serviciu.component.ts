@@ -128,9 +128,6 @@ export class ServiciuComponent implements OnInit{
     'orar_duminica_end':new FormControl(this.currentData.orar[0].end),
     'orar_duminica_inactiv':new FormControl(this.currentData.orar[0].inactiv),
     'orar_identic':new FormControl(this.orar_identic),
-
-   // orar:OrarZilnic[];
-
    }
   );
  }
@@ -225,6 +222,11 @@ export class ServiciuComponent implements OnInit{
       if(this.furnizor){
         // nu este administrator, filtrez lista doar cu serviciile lui
         documents=documents.filter((furnizor:any)=>(furnizor.nume == this.furnizor.nume));
+      }else{
+        if(!this.autentificare.isAdmin){
+          // daca nu exista furnizor creat cu email ul respectiv si nu e admin
+          documents=[];
+        }
       }
       documents.forEach((document:any)=>{
         let key:string = (typeof document.nume == 'undefined'?'':document.nume);

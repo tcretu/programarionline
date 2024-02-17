@@ -119,13 +119,6 @@ let filterFunction = (data: any, filter: string): boolean =>{
         if((data[col]!=null)&&(data[col].toString().toLowerCase().indexOf(searchTerms[col].trim().toLowerCase())!=-1)){
           found = true;
         }
-        /*
-        searchTerms[col].trim().toLowerCase().split(' ').forEach((word: any) => {
-          if ((data[col]!=null) && (data[col].toString().toLowerCase().indexOf(word) != -1 && isFilterSet)) {
-            found = true
-          }
-        });
-        */
       }
       return found;
     } else {
@@ -155,7 +148,6 @@ resetFilters() {
 //actiunile de pe butoanele din fiecare linie
 edit(data:any){
   // seteaza parametrul curent in componenta de editare
-  //this.parametruCurent=data;
   this.dialogInfo.open(FurnizorComponent, {data:{parametru:data}});
 }
 
@@ -172,7 +164,6 @@ delete(data:any){
 newData(){
   // creeaza un parametru nou pentru operatiunea de Adauga in componenta de editare
   let data = new Furnizor();
-  //this.parametruCurent=data;
   this.dialogInfo.open(FurnizorComponent, {data:{parametru:data}});
 }
 

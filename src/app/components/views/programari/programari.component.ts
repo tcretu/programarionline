@@ -114,6 +114,11 @@ export class ProgramariComponent {
         if(this.furnizor){
           // nu este administrator, filtrez lista doar cu serviciile lui
           documents=documents.filter((serviciu)=>(serviciu.furnizor == this.furnizor.nume));
+        }else{
+          if(!this.autentificare.isAdmin){
+            // daca nu exista furnizor creat cu email ul respectiv si nu e admin
+            documents=[];
+          }
         }
         this.lista_servicii=documents.sort((a,b)=>(a.domeniu <b.domeniu ? -1:(a.domeniu == b.domeniu? (a.nume<b.nume?-1:1):1)));
         this.lista_alfabetica_domenii_servicii=documents.map(serviciu=>(serviciu.domeniu)).sort();
@@ -177,33 +182,33 @@ return [...new Set(lista_furnizori_servicii)];
 
 
 load_lista_alfabetica_orase_din_judet(judet:string):string[]{
-return this.lista_servicii.filter(serviciu=>(serviciu.judet == judet)).map(serviciu=>(serviciu.localitate));
+  return this.lista_servicii.filter(serviciu=>(serviciu.judet == judet)).map(serviciu=>(serviciu.localitate));
 }
 
 alege_serviciu(domeniu:string, nume_serviciu:string){
-this.domeniu_serviciu={domeniu:domeniu, serviciu:nume_serviciu};
+  this.domeniu_serviciu={domeniu:domeniu, serviciu:nume_serviciu};
 }
 
 setCurrentData(serviciu:Serviciu){
-this.currentDataAsObservable.next(serviciu);
-if(!serviciu.permanent){
-this.minDate = serviciu.data_start;
-this.maxDate = serviciu.data_end;
-}
-this.subtitle = 'Selectati un interval de programare';
+  this.currentDataAsObservable.next(serviciu);
+  if(!serviciu.permanent){
+    this.minDate = serviciu.data_start;
+    this.maxDate = serviciu.data_end;
+  }
+  this.subtitle = 'Selectati un interval de programare';
 }
 
 setCurrentDataFrom(domeniu:string, nume_serviciu:string, nume_furnizor:string){
-let lista_furnizori_servicii= this.lista_servicii.filter(serviciu=>
-((serviciu.domeniu == domeniu)&&(serviciu.nume==nume_serviciu)&&(serviciu.furnizor==nume_furnizor)&&(!serviciu.are_prestator)));
-if(lista_furnizori_servicii.length == 1){
-let serviciu = lista_furnizori_servicii[0];
-this.currentDataAsObservable.next(serviciu);
-if(!serviciu.permanent){
-  this.minDate = serviciu.data_start;
-  this.maxDate = serviciu.data_end;
-}
-this.subtitle = 'Selectati un interval de programare';
+  let lista_furnizori_servicii= this.lista_servicii.filter(serviciu=>
+  ((serviciu.domeniu == domeniu)&&(serviciu.nume==nume_serviciu)&&(serviciu.furnizor==nume_furnizor)&&(!serviciu.are_prestator)));
+  if(lista_furnizori_servicii.length == 1){
+  let serviciu = lista_furnizori_servicii[0];
+  this.currentDataAsObservable.next(serviciu);
+  if(!serviciu.permanent){
+    this.minDate = serviciu.data_start;
+    this.maxDate = serviciu.data_end;
+  }
+  this.subtitle = 'Selectati un interval de programare';
 }
 
 
@@ -258,8 +263,6 @@ print(){
       WindowPrt.document.write(styles)
       WindowPrt.document.write('<body class="mat-typography">'+printContent.innerHTML+printScript+'</body>');
       WindowPrt.focus();
-      //WindowPrt.print();
-      //WindowPrt.close();
     }
 }
 

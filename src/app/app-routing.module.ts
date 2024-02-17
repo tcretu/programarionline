@@ -6,8 +6,9 @@ import { ForgotPasswordComponent } from '@components/forms/forgot-password/forgo
 import { DashboardComponent } from '@components/navigators/dashboard/dashboard.component';
 import { VerifyEmailComponent } from '@components/forms/verify-email/verify-email.component';
 import { UtilizatoriComponent } from '@components/views/utilizatori/utilizatori.component';
-import { SecureAdminPagesGuardService } from './shared/guards/secure-admin-pages.guard.service';
-import { SecureAuthenticatedPagesGuardService } from './shared/guards/secure-authenticated-pages.guard.service';
+import { SecureAdminPagesGuardService } from '@shared/guards/secure-admin-pages.guard.service';
+import { SecureAuthenticatedPagesGuardService } from '@shared/guards/secure-authenticated-pages.guard.service';
+import { SecureAdminOrFurnizorPagesGuardService} from '@shared/guards/secure-admin-or-furnizor-pages.guard.service';
 import { ParametriComponent } from '@components/views/parametri/parametri.component';
 import { ProgrameazaComponent } from '@components/navigators/programeaza/programeaza.component';
 import { ConfirmaComponent } from '@components/navigators/confirma/confirma.component';
@@ -43,11 +44,11 @@ const routes: Routes = [
       },
       { path: 'parametri', component: ParametriComponent, title:'Parametri',  canActivate:[SecureAdminPagesGuardService] },
       { path: 'furnizori', component: FurnizoriComponent, title:'Furnizori',  canActivate:[SecureAdminPagesGuardService] },
-      { path: 'servicii', component: ServiciiComponent, title:'Servicii',  canActivate:[SecureAuthenticatedPagesGuardService] },
-      { path: 'programari', component: ProgramariComponent, title:'Programari',  canActivate:[SecureAuthenticatedPagesGuardService] },
+      { path: 'servicii', component: ServiciiComponent, title:'Servicii',  canActivate:[SecureAdminOrFurnizorPagesGuardService] },
+      { path: 'programari', component: ProgramariComponent, title:'Programari',  canActivate:[SecureAdminOrFurnizorPagesGuardService] },
     ]
   },
-  { path: '**', component: PageNotFoundComponent, title: 'Pagina cautata nua fost gasita' },
+  { path: '**', component: PageNotFoundComponent, title: 'Pagina cautata nu a fost gasita' },
 
 ];
 

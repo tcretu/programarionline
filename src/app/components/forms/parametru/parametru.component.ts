@@ -27,14 +27,6 @@ filteredOptions: Observable<string[]>;
 constructor(public parametri:ParametriService,
             private snackBar:MatSnackBar,
             @Inject(MAT_DIALOG_DATA) public data:any,) {
-/*
-  if(data.tip!=''){
-    this.currentData=data;
-  }else{
-    this.currentData.descriere='';
-  }
-  */
-
   this.currentData=data.parametru;
   this.title= (typeof this.currentData.id=='undefined'? 'Adaugare ':'')+ MODEL_NAME;
   this.getTipList();
@@ -116,10 +108,5 @@ constructor(public parametri:ParametriService,
   }
  }
 
-
- __close(){
-  //this.refreshList.emit();
-  this.onclose.emit();
- }
 
 }

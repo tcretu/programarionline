@@ -233,8 +233,6 @@ export class ProgrameazaComponent {
       case 1: this.currentData = null;
               this.subtitle = 'Selectati un serviciu';
               break;
-
-      case 2:
     }
   }
 

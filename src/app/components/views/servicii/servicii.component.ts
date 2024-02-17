@@ -90,6 +90,11 @@ this.servicii.getAllAsObservable().snapshotChanges().pipe(
     if(this.furnizor){
       // nu este administrator, filtrez lista doar cu serviciile lui
       documents=documents.filter((serviciu)=>(serviciu.furnizor == this.furnizor.nume));
+    }else{
+      if(!this.autentificare.isAdmin){
+        // daca nu exista furnizor creat cu email ul respectiv si nu e admin
+        documents=[];
+      }
     }
     documents=documents.map(document=>
       ({...document,
@@ -178,11 +183,6 @@ resetFilters() {
 
 //actiunile de pe butoanele din fiecare linie
 edit(data:any){
-  // seteaza parametrul curent in componenta de editare
-  //this.parametruCurent=data;
-  //console.log(data)
-  //data.data_start=new Date(data.data_start.seconds *1000);
-  //data.data_end=new Date(data.data_end.seconds *1000);
   this.dialogInfo.open(ServiciuComponent, {data:{parametru:data}});
 }
 
@@ -199,7 +199,6 @@ delete(data:any){
 newData(){
   // creeaza un parametru nou pentru operatiunea de Adauga in componenta de editare
   let data = new Serviciu();
-  //this.parametruCurent=data;
   this.dialogInfo.open(ServiciuComponent, {data:{parametru:data}});
 }
 
@@ -215,10 +214,6 @@ reset(){
   this.getAllDocuments();
   this.snackBar.open('Lista de '+COLLECTION_NAME+' a fost actualizata!','Inchide',{duration:env.notification_timeout});
 }
-
-
-
-
 
 
 }
