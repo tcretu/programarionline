@@ -1,5 +1,6 @@
 {
-  "hosting": {
+ "hosting": {
+    "site": "programarionline",
     "public": "dist/programarionline",
     "ignore": [
       "firebase.json",

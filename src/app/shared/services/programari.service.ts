@@ -125,7 +125,6 @@ export class ProgramariService extends FirebaseCrudService {
   }
   let serviciu:Serviciu=servicii_cu_nume[0];
   if(serviciu.permanent){
-    //    console.log('Serviciu permanent')
     return true;
   }else{
     return ((serviciu.data_start <= zi) && (zi <= serviciu.data_end));
@@ -134,7 +133,6 @@ export class ProgramariService extends FirebaseCrudService {
 
   sloturi(nume_serviciu:string, nume_furnizor:string, nume_prestator:string, zi:Date):any{
     if(this.zi_libera(nume_serviciu, nume_furnizor, nume_prestator, zi)){
-      //console.log('Zi libera')
       return [];
     }
     let servicii_cu_nume = this.documenteServicii.filter(data=>
@@ -150,7 +148,6 @@ export class ProgramariService extends FirebaseCrudService {
     let orarPeZi=serviciu.orar[ziNr];
     let nuAreProgram = serviciu.orar[ziNr].inactiv;
     if(nuAreProgram){
-      //console.log('Nu are program')
       return [];
     }
     let _start=serviciu.orar[ziNr].start;

@@ -70,19 +70,6 @@ export class AutentificareService {
    }
 
 
-  //get User
-    //get Authenticated user from firebase
-    __getAuthFire(){
-      return this.auth.currentUser;
-    }
-
-    //get Authenticated user from Local Storage
-    __getAuthLocal(){
-      const token = localStorage.getItem('user')
-      const user = JSON.parse(token as string);
-      return user;
-    }
-
     hasRole(role:string){
       return this.UserData && this.UserData['roles'] && this.UserData['roles'].includes(role);
     }
@@ -105,9 +92,7 @@ export class AutentificareService {
     Register(email : string, password : string) {
       return this.auth.createUserWithEmailAndPassword(email, password)
       .then((result) => {
-       // result.user?.updateProfile({displayName:'', photoURL:''});
        this.setCurrentUser(result.user);
-//       this.utilizatori.addUser(result.user);
        this.utilizatori.create(result.user);
         this.ngZone.run(() => {
           result.user?.sendEmailVerification().then(
@@ -127,12 +112,6 @@ export class AutentificareService {
       return this.auth.signInWithEmailAndPassword(email, password)
       .then((result: any) => {
         console.log(result.user);
-        /*
-        this.utilizatori.getUserDataAsObservable(result.user).valueChanges().subscribe(userValue=>{
-          console.log(userValue);
-          this.UserData!=userValue;
-        });
-        */
         this.ngZone.run(() => {
           this.router.navigate(['dashboard']);
         });
@@ -150,7 +129,7 @@ export class AutentificareService {
       });
     }
 
-  //login with Email or Facebook
+
     //Login with Google
     GoogleAuth() {
       return this.loginWithPopup(new GoogleAuthProvider());
@@ -181,14 +160,6 @@ export class AutentificareService {
       });
     }
 
-    //Send Email Verification
-    ___sendEmailVerification(){
-      return this.auth.currentUser.then((user)=> {return user!.sendEmailVerification();})
-      .then(() => {
-        this.router.navigate(['/verify-email-address']);
-      });
-    }
-
     setCurrentUser(user: any) {
       this.UserData ={
         uid: user.uid,
@@ -200,119 +171,12 @@ export class AutentificareService {
       };
     }
 
-
-
     deserialize(key:string, value:any) {
       let maskedValue = value;
       if  ((key === 'createdDate')) {
           maskedValue = value.seconds * 1000;
       }
       return maskedValue;
-    }
-
-    ___getUserList() {
-      /*
-      return this.afs.collection('users').get().pipe(
-        map((querySnapshot) => {
-          return querySnapshot.docs.map((dataItem) => {
-            console.log(dataItem.data());
-            const user = JSON.parse(JSON.stringify(dataItem.data(), this.deserialize));
-            return user as User;
-          });
-        }));
-*/
-       let usersRef:AngularFirestoreCollection<Utilizator>;
-       usersRef= this.afs.collection('/users');
-        usersRef.snapshotChanges().pipe(
-          map(changes=>changes.map(c=>({
-            id:c.payload.doc.id, ...c.payload.doc.data()
-          })))
-        ).subscribe(data=>{this.Users=data;});
-
-        return new Promise<any>((resolve)=> {
-          this.afs.collection('users').snapshotChanges().pipe(
-            map((changes:DocumentChangeAction<unknown>[])=>changes.map(c=>{
-              const data=c.payload.doc.data() as Utilizator;
-              return {id:c.payload.doc.id, ...data}
-            }))).subscribe(users => resolve(users));
-        });
-
-
-       return new Promise<any>((resolve)=> {
-        this.afs.collection('users').valueChanges().subscribe(users => resolve(users));
-      })
-      }
-
-
-    async __setUserRole(user: any, role:string) {
-      try{
-      if (!(role && role!='')){
-          return;
-        }
-      const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-        `users/${user.uid}`
-      );
-      this.UserData=user;
-      let roles=user.roles;
-      if(user.roles.includes(role)){
-        return; //already has role
-      }
-      roles.push(role);
-      user.roles=roles;
-
-      userRef.set(user, {
-        merge: true,
-      });
-      this.UserData.roles=roles;
-      console.log('User add role '+role)
-    }catch(e){
-      console.log(e);
-    }
-      return;
-    }
-
-    async __deleteUserRole(user: any, role:string) {
-      try{
-      if (!(role && role!='')){
-          return;
-        }
-      const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-        `users/${user.uid}`
-      );
-      this.UserData=user;
-      let roles=[];
-      if(!user.roles.includes(role)){
-        return; //does not have role
-      }
-      while(user.roles.length){
-        let rolePop=user.roles.pop();
-        if(rolePop!=role){
-          roles.push(rolePop);
-        }
-      }
-      user.roles=roles;
-
-      userRef.set(user, {
-        merge: true,
-      });
-      this.UserData.roles=roles;
-      console.log('User delete role '+role)
-    }catch(e){
-      console.log(e);
-    }
-      return;
-    }
-
-    __getUsers(){
-      try{
-        const usersRef: AngularFirestoreCollection<any> = this.afs.collection(`users`);
-        let users:any[]=[];
-        usersRef.valueChanges().subscribe(user=>{users.push(user)});
-        return users;
-      }catch(e){
-
-      }
-      return [];
     }
 
 }

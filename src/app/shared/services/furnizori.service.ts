@@ -16,27 +16,4 @@ export class FurnizoriService extends FirebaseCrudService {
     this.key = 'name';
   }
 
-  __getAsObservable(id:string):AngularFirestoreDocument<Furnizor> {
-    return this.afs.doc(`${COLLECTION_NAME}/${id}`);
-  }
-
-  __getAllAsObservable():AngularFirestoreCollection<Furnizor> {
-   return  this.afs.collection(COLLECTION_NAME);
-  }
-
-  __create(data:any){
-    const allRef$:AngularFirestoreCollection<Furnizor> = this.getAllAsObservable();
-    return allRef$.add({...data});
-  }
-
-  __update(id?: string, data?: any): Promise<void> {
-    const allRef$:AngularFirestoreCollection<Furnizor> = this.getAllAsObservable();
-    return allRef$.doc(id).update(data);
-  }
-
-  __delete(id: string): Promise<void> {
-    const allRef$:AngularFirestoreCollection<Furnizor> = this.getAllAsObservable();
-    return allRef$.doc(id).delete();
-  }
-
 }

@@ -1,14 +1,14 @@
 {
   "targets": {
-    "programari-online-69002": {
+    "programarionline": {
       "hosting": {
         "programarionline": [
-          "programari-online-69002"
+          "programarionline"
         ]
       }
     }
   },
   "projects": {
-    "default": "programari-online-69002"
+    "default": "programarionline"
   }
 }
