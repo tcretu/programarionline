@@ -33,7 +33,7 @@
 <mat-form-field class="col-12 col-md-6" >
   <mat-icon matPrefix>phone</mat-icon>
   <mat-label>Telefon</mat-label>
-  <input type="text" matInput placeholder="telefon" [(ngModel)]="solicitant.telefon" formControlName="telefon" required [readonly]="readonly">
+  <input type="text" [inputMask]="telefonInputMask" matInput placeholder="(0xxx) xxx-xxx" [(ngModel)]="solicitant.telefon" formControlName="telefon" required [readonly]="readonly">
 </mat-form-field>
 </div>
 <mat-dialog-actions align="end">

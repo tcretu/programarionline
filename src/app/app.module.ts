@@ -30,6 +30,7 @@ import { InformatiiAplicatieComponent } from '@components/forms/informatii-aplic
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { ConfirmaComponent } from '@components/navigators/confirma/confirma.component';
 import { AnuleazaComponent } from '@components/navigators/anuleaza/anuleaza.component';
+import { InputMaskModule } from '@ngneat/input-mask';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { AnuleazaComponent } from '@components/navigators/anuleaza/anuleaza.comp
     BrowserAnimationsModule,
     FormsModule,
     AppMaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InputMaskModule
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   bootstrap: [AppComponent]

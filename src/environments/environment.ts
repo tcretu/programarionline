@@ -31,7 +31,7 @@ export const environment = {
     version:'1.0.0',
     released:new Date(2024,1,4,15,0,0),
     author:{
-          name:'Tudor Cretu',
+          name:'Tudor Eugen Cretu',
           email:'tudor.cretu.2013@gmail.com',
           tel: '+40 772 219 552',
           description:'An III IE FSEGA UBB'

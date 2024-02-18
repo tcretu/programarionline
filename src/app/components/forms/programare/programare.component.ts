@@ -12,6 +12,7 @@ import emailjs, { type EmailJSResponseStatus } from '@emailjs/browser';
 import { map } from 'rxjs';
 import { Programare } from '@models/programare';
 import {CNP} from '@shared/models/CNP';
+import { createMask } from '@ngneat/input-mask';
 
 @Component({
   selector: 'app-programare',
@@ -22,9 +23,10 @@ export class ProgramareComponent implements OnInit{
   @Input() serviciu:Serviciu;
   @Input() slot:Slot;
   solicitant:Solicitant;
-  dataForm!:FormGroup;
+  dataForm:any;
   public readonly=false;
   public submitted:boolean=false;
+  telefonInputMask = createMask('(0999) 999-999');
    constructor(@Inject(MAT_DIALOG_DATA) public data:any,
              protected programari:ProgramariService,
              private snackBar:MatSnackBar){
@@ -128,7 +130,12 @@ export class ProgramareComponent implements OnInit{
     isValidCNP(control:any){
       let cnp= control.value;
       let cnpObj=new CNP(cnp);
-      return cnpObj.isValid() ? { 'requirements': true } : null;
+      return !cnpObj.isValid() ? { 'requirements': true } : null;
+    }
+
+    getErrorCNP() {
+        return this.dataForm.get('cnp').hasError('required') ? 'Camp obligatoriu ' :
+           this.dataForm.get('cnp').hasError('requirements') ? 'CNP invalid' : '';
     }
 
 
