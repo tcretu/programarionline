@@ -51,7 +51,7 @@ export class InregistrareUtilizatorComponent implements OnInit {
   }
 
   checkPassword(control:any) {
-    let enteredPassword = control.value
+    let enteredPassword = control.value;
     let passwordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/;
     return (!passwordCheck.test(enteredPassword) && enteredPassword) ? { 'requirements': true } : null;
   }

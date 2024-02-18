@@ -117,7 +117,9 @@ export class ProgrameazaComponent {
       ).subscribe(documents=>{
           if(this.judet!=''){
             documents=documents.filter(document=>(document.judet==this.judet));
-            this.lista_alfabetica_orase_din_judet = documents.filter(serviciu=>(serviciu.judet == this.judet)).map(serviciu=>(serviciu.localitate));;
+            this.lista_alfabetica_orase_din_judet = documents.filter(serviciu=>(serviciu.judet == this.judet)).map(serviciu=>(serviciu.localitate));
+            // se face unique de this.lista_alfabetica_orase_din_judet
+            this.lista_alfabetica_orase_din_judet = [...new Set(this.lista_alfabetica_orase_din_judet)] ;
             if(this.localitate!=''){
               documents=documents.filter(document=>(document.localitate==this.localitate));
             }
@@ -128,7 +130,6 @@ export class ProgrameazaComponent {
                   ['nume','furnizor','domeniu'].forEach(k=>{
                     if(document[k].toString().toLowerCase().indexOf(this.search_value.toLowerCase())>=0){
                       found=true;
-                      console.log(document[k].toString())
                     }
                   });
                   return found;
@@ -164,7 +165,8 @@ export class ProgrameazaComponent {
 
 
   load_lista_alfabetica_orase_din_judet(judet:string):string[]{
-    return this.lista_servicii.filter(serviciu=>(serviciu.judet == judet)).map(serviciu=>(serviciu.localitate));
+    let localitati= this.lista_servicii.filter(serviciu=>(serviciu.judet == judet)).map(serviciu=>(serviciu.localitate));
+    return [...new Set(localitati)]; // echivalent cu array.unique()
   }
 
   alege_serviciu(domeniu:string, nume_serviciu:string){

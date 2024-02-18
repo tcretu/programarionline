@@ -11,6 +11,7 @@ import { environment as env } from '@environments/environment';
 import emailjs, { type EmailJSResponseStatus } from '@emailjs/browser';
 import { map } from 'rxjs';
 import { Programare } from '@models/programare';
+import {CNP} from '@shared/models/CNP';
 
 @Component({
   selector: 'app-programare',
@@ -46,7 +47,7 @@ export class ProgramareComponent implements OnInit{
       this.dataForm = new FormGroup(
         {
         'nume': new FormControl(this.solicitant.nume, [Validators.required]),
-        'cnp': new FormControl(this.solicitant.cnp, [Validators.required]),
+        'cnp': new FormControl(this.solicitant.cnp, [Validators.required, this.isValidCNP]),
         'email': new FormControl(this.solicitant.email, [Validators.required,Validators.pattern(emailregex)]),
         'prenume': new FormControl(this.solicitant.prenume, [Validators.required]),
         'telefon': new FormControl(this.solicitant.telefon, [Validators.required]),
@@ -123,5 +124,12 @@ export class ProgramareComponent implements OnInit{
           },
         );
     }
+
+    isValidCNP(control:any){
+      let cnp= control.value;
+      let cnpObj=new CNP(cnp);
+      return cnpObj.isValid() ? { 'requirements': true } : null;
+    }
+
 
  }
