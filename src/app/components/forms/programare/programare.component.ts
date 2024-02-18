@@ -69,8 +69,8 @@ export class ProgramareComponent implements OnInit{
           anulare_minute:this.serviciu.anulare_minute,
         },
         solicitant:{
-          nume:this.solicitant.nume,
-          prenume:this.solicitant.prenume,
+          nume:this.solicitant.nume.toUpperCase(),
+          prenume:this.solicitant.prenume.toUpperCase(),
           cnp:this.solicitant.cnp,
           email:this.solicitant.email,
           telefon:this.solicitant.telefon
