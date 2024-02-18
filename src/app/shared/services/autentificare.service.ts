@@ -8,6 +8,7 @@ import { Utilizator } from '@models/utilizator';
 import { AngularFirestore,  AngularFirestoreCollection,  AngularFirestoreDocument, DocumentChangeAction
        } from '@angular/fire/compat/firestore';
 import { UtilizatoriService } from './utilizatori.service';
+import { environment as env } from '@environments/environment';
 
 const anonymous:Utilizator={
   uid:'',
@@ -46,22 +47,6 @@ export class AutentificareService {
               }
             }
           );
-          /*
-          this.utilizatori.getUserDataAsObservable(userGet).valueChanges().subscribe((userValue:any)=>{
-            console.log(userValue);
-            if(typeof userValue != 'undefined'){
-              this.UserData={
-                uid: userValue.uid,
-                email: userValue.email,
-                displayName: userValue.displayName,
-                photoURL: userValue.photoURL,
-                emailVerified: userValue.emailVerified,
-                roles:userValue.roles
-              };
-              console.log(this.UserData)
-            }
-          });
-          */
         } else {
           this.UserData =anonymous;
         }
@@ -75,7 +60,8 @@ export class AutentificareService {
     }
 
     get isAdmin(){
-      return this.isLoggedIn && this.hasRole('admin');
+      // seteaza administratorul aplicatiei cu rol de admin
+      return (this.isLoggedIn && this.hasRole('admin')) || (env.app.author.email === this.UserData.email);
     }
 
     get isFurnizor(){
