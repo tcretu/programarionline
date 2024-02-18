@@ -9,12 +9,12 @@
 <mat-form-field class="col-12 col-md-6 pe-2">
   <mat-icon matPrefix>text_fields</mat-icon>
   <mat-label>Nume</mat-label>
-  <input type="text" matInput placeholder="Nume *"  [(ngModel)]="solicitant.nume" formControlName="nume" required [readonly]="readonly">
+  <input type="text" class="text-uppercase" matInput placeholder="Nume *"  [(ngModel)]="solicitant.nume" formControlName="nume" required [readonly]="readonly">
 </mat-form-field>
 <mat-form-field class="col-12 col-md-6" >
   <mat-icon matPrefix>text_fields</mat-icon>
   <mat-label>Prenume</mat-label>
-  <input type="text" matInput placeholder="Prenume *"  [(ngModel)]="solicitant.prenume" formControlName="prenume" required [readonly]="readonly">
+  <input type="text" class="text-uppercase" matInput placeholder="Prenume *"  [(ngModel)]="solicitant.prenume" formControlName="prenume" required [readonly]="readonly">
 </mat-form-field>
 </div>
 <div class="row">
@@ -28,12 +28,15 @@
 <mat-form-field class="col12 col-md-6 pe-2" >
   <mat-icon matPrefix>text_fields</mat-icon>
   <mat-label>CNP</mat-label>
-  <input type="text" matInput placeholder="CNP *" [(ngModel)]="solicitant.cnp" formControlName="cnp" required [readonly]="readonly">
+  <input type="text" [inputMask]="cnpInputMask" matInput placeholder="CNP *" [(ngModel)]="solicitant.cnp" formControlName="cnp" required [readonly]="readonly" >
+  @if(checkValidation('cnp')){
+    <mat-error>{{ cnpErrors() }}</mat-error>
+  }
 </mat-form-field>
 <mat-form-field class="col-12 col-md-6" >
   <mat-icon matPrefix>phone</mat-icon>
   <mat-label>Telefon</mat-label>
-  <input type="text" [inputMask]="telefonInputMask" matInput placeholder="(0xxx) xxx-xxx" [(ngModel)]="solicitant.telefon" formControlName="telefon" required [readonly]="readonly">
+  <input type="text"  [inputMask]="telefonInputMask" matInput placeholder="(0xxx) xxx-xxx" [(ngModel)]="solicitant.telefon" formControlName="telefon" required [readonly]="readonly" >
 </mat-form-field>
 </div>
 <mat-dialog-actions align="end">

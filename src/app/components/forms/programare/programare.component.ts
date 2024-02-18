@@ -27,6 +27,7 @@ export class ProgramareComponent implements OnInit{
   public readonly=false;
   public submitted:boolean=false;
   telefonInputMask = createMask('(0999) 999-999');
+  cnpInputMask = createMask('9999999999999');
    constructor(@Inject(MAT_DIALOG_DATA) public data:any,
              protected programari:ProgramariService,
              private snackBar:MatSnackBar){
@@ -133,10 +134,14 @@ export class ProgramareComponent implements OnInit{
       return !cnpObj.isValid() ? { 'requirements': true } : null;
     }
 
-    getErrorCNP() {
+    cnpErrors() {
         return this.dataForm.get('cnp').hasError('required') ? 'Camp obligatoriu ' :
            this.dataForm.get('cnp').hasError('requirements') ? 'CNP invalid' : '';
     }
 
+    checkValidation(input: string){
+      const validation = this.dataForm.get(input).invalid && (this.dataForm.get(input).dirty || this.dataForm.get(input).touched)
+      return validation;
+    }
 
  }
