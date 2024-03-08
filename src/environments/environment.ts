@@ -8,7 +8,7 @@ export const environment = {
   apiKey: "********",
   authDomain: "programari-online-69002.firebaseapp.com",
   databaseURL: "https://programari-online-69002-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "programari-online-69002",
+  projectId: "programarionline-69002",
   storageBucket: "programari-online-69002.appspot.com",
   messagingSenderId: "******",
   appId: "*********"
@@ -37,7 +37,7 @@ export const environment = {
           description:'An III IE FSEGA UBB'
     },
     codeLocation:'https://github.com/tcretu/programarionline',
-    hosting:'https://programari-online-69002.web.app',
+    hosting:'https://programarionline.web.app',
     confirmation_path:'/confirma/',
     cancellation_path:'/anuleaza/'
   },
