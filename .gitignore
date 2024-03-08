@@ -45,3 +45,7 @@ Thumbs.db
 .firebase
 *-debug.log
 .runtimeconfig.json
+
+# Secrets
+/src/environments/emailjs-secret.ts
+/src/environments/firebase-secret.ts
